@@ -1,0 +1,44 @@
+version: '2'
+services:
+    nginx:
+        image: zhqnginx:v1
+        build:
+            context: .
+            dockerfile: ./nginx/Dockerfile
+        ports:
+            - "80:80"
+        networks:
+            - frontend
+        volumes:
+            - /home/zhangzhiqiang/Develop/blog:/usr/local/src/ssx
+        depends_on:
+            - php
+    php:
+        image: php7-zhq
+        build:
+            context: .
+            dockerfile: ./php/Dockerfile
+        volumes:
+            - /home/zhangzhiqiang/Develop/blog:/usr/local/src/ssx
+        networks:
+            - frontend
+            - backend
+        environment:
+            MYSQL_PASSWORD: Passw0rd
+        depends_on:
+            - mysql
+    mysql:
+        image: mysql:5.7
+        ports:
+            - "3306:3306"
+        volumes:
+            - /home/zhangzhiqiang/docker-lnmp/mysql/data:/var/lib/mysql
+        environment:
+            TZ: 'Asia/Shanghai'
+            MYSQL_ROOT_PASSWORD: Passw0rd
+        command: ['mysqld', '--character-set-server=utf8']
+        networks:
+            - backend
+networks:
+    frontend:
+    backend:  
