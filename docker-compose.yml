@@ -3,7 +3,7 @@ services:
     nginx:
         image: zhqnginx:v1
         build:
-            context: .
+            context: ./nginx
             dockerfile: ./nginx/Dockerfile
         ports:
             - "80:80"
@@ -16,7 +16,7 @@ services:
     php:
         image: php7-zhq
         build:
-            context: .
+            context: ./php
             dockerfile: ./php/Dockerfile
         volumes:
             - /home/zhangzhiqiang/Develop/blog:/usr/local/src/ssx
