@@ -1,4 +1,4 @@
-FROM php
+FROM php:7-fpm
 
 ENV TZ=Asia/Shanghai
 
@@ -38,4 +38,5 @@ RUN set -xe \
     && rm -rf /var/lib/apt/lists/*
 
 COPY ./conf/php.conf /usr/local/etc/php/conf.d/php.conf
-CMD php
+EXPOSE 9000
+CMD ["php-fpm"]
